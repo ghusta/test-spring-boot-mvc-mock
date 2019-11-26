@@ -32,3 +32,6 @@ It uses https://docs.spring.io/spring/docs/current/spring-framework-reference/te
 ** https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/test/autoconfigure/web/servlet/AutoConfigureMockMvc.html[MockMvcAutoConfiguration] (Spring Boot)
 ** https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/web/servlet/WebMvcProperties.html[WebMvcProperties] (Spring Boot -- _spring.mvc.*_)
 ** https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/web/servlet/DispatcherServletPath.html[DispatcherServletPath] (Spring Boot -- _spring.mvc.servlet.path_)
+* StackOverflow :
+** https://stackoverflow.com/questions/21837872/how-to-set-servlet-path-for-every-request-through-mockmvc[How to set servlet path for every request through MockMvc]
+** https://stackoverflow.com/questions/21749781/why-i-received-an-error-403-with-mockmvc-and-junit[Why I received an Error 403 with MockMvc and JUnit?]
