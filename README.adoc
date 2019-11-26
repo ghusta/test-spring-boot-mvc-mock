@@ -35,3 +35,4 @@ It uses https://docs.spring.io/spring/docs/current/spring-framework-reference/te
 * StackOverflow :
 ** https://stackoverflow.com/questions/21837872/how-to-set-servlet-path-for-every-request-through-mockmvc[How to set servlet path for every request through MockMvc]
 ** https://stackoverflow.com/questions/21749781/why-i-received-an-error-403-with-mockmvc-and-junit[Why I received an Error 403 with MockMvc and JUnit?]
+** https://stackoverflow.com/questions/32903024/why-is-the-configured-servlet-path-correctly-used-by-the-rest-controllers-but-i[Why is the configured servlet path correctly used by the REST controllers, but ignored in Spring Security features?] (answer by Rob Winch)
