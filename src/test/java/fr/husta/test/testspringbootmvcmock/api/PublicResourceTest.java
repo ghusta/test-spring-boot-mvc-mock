@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletPath;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -26,10 +27,20 @@ class PublicResourceTest {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * Should be configured by {@link org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration}
+     */
+    @Autowired
+    private DispatcherServletPath dispatcherServletPath;
+
     @BeforeEach
     void setUp() {
         String propSpringMvcServletPath = env.getProperty("spring.mvc.servlet.path", "---");
-        log.debug("'spring.mvc.servlet.path' = {}", propSpringMvcServletPath);
+        log.debug("Property 'spring.mvc.servlet.path' = {}", propSpringMvcServletPath);
+        log.debug("Auto-configuration              : Path = {}",
+                dispatcherServletPath.getPath());
+        log.debug("Auto-config, computed from Path : Prefix = {}; ServletUrlMapping = {}",
+                dispatcherServletPath.getPrefix(), dispatcherServletPath.getServletUrlMapping());
     }
 
     @Test

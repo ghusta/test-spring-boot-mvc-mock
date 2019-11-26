@@ -31,3 +31,4 @@ It uses https://docs.spring.io/spring/docs/current/spring-framework-reference/te
 ** https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/web/servlet/MockMvc.html[MockMvc] (Spring FWK)
 ** https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/test/autoconfigure/web/servlet/AutoConfigureMockMvc.html[MockMvcAutoConfiguration] (Spring Boot)
 ** https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/web/servlet/WebMvcProperties.html[WebMvcProperties] (Spring Boot -- _spring.mvc.*_)
+** https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/web/servlet/DispatcherServletPath.html[DispatcherServletPath] (Spring Boot -- _spring.mvc.servlet.path_)
