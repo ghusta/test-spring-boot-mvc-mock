@@ -17,7 +17,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(encoder)
                 .withUser("spring")
                 .password(encoder.encode("secret"))
-                .roles("USER");
+                .roles("USER")
+                .and()
+                .withUser("admin")
+                .password(encoder.encode("admin"))
+                .roles("USER", "ADMIN");
     }
 
     @Override
