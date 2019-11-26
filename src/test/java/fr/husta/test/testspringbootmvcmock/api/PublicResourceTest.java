@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -46,7 +48,9 @@ class PublicResourceTest {
     @Test
     void shouldGetGreetingsReturnOk() throws Exception {
         MvcResult mvcResult = mockMvc.perform(get("/public/greetings"))
+                .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value("Hello !"))
                 .andReturn();
 
         // Just to use AssertJ
