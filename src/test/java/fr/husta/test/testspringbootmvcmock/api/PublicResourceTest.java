@@ -35,7 +35,7 @@ class PublicResourceTest {
 
     @BeforeEach
     void setUp() {
-        String propSpringMvcServletPath = env.getProperty("spring.mvc.servlet.path", "---");
+        String propSpringMvcServletPath = env.getProperty("spring.mvc.servlet.path", "<MISSING>");
         log.debug("Property 'spring.mvc.servlet.path' = {}", propSpringMvcServletPath);
         log.debug("Auto-configuration              : Path = {}",
                 dispatcherServletPath.getPath());
