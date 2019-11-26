@@ -9,12 +9,14 @@ import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletPath;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -83,6 +85,17 @@ class PublicResourceTest {
         // Just to use AssertJ
         assertThat(mvcResult).isNotNull();
         assertThat(mvcResult.getResolvedException()).isNotNull();
+    }
+
+    @Test
+    @WithMockUser(username = "spring")
+    void shouldGetGreetingsReturnOkBeingAuthenticated() throws Exception {
+        mockMvc.perform(get("/public/greetings").accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(authenticated().withUsername("spring"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value("Hello !"))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
     @Test
