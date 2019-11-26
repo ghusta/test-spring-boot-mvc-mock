@@ -1,5 +1,7 @@
 package fr.husta.test.testspringbootmvcmock;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private WebMvcProperties webMvcProperties;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -26,14 +31,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // will add optional prefix to request url
+        WebMvcProperties.Servlet mvcServlet = webMvcProperties.getServlet();
         http
                 .authorizeRequests()
-                .antMatchers("/api/public/**").permitAll()
-                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/private/**").authenticated()
+                .antMatchers(mvcServlet.getPath("/public/**")).permitAll()
+                .antMatchers(mvcServlet.getPath("/auth/**")).permitAll()
+                .antMatchers(mvcServlet.getPath("/private/**")).authenticated()
                 .anyRequest().denyAll()
                 .and()
-                .anonymous().disable()
+//                .anonymous().disable()
                 .httpBasic();
     }
 
