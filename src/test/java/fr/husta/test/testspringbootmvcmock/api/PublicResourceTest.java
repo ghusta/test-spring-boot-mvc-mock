@@ -77,6 +77,7 @@ class PublicResourceTest {
         log.debug("Pattern permitAll = {}", springSecurityPattern);
         String processedPath = webMvcServlet.getPath("/public/greetings");
         log.debug("URL = {}", processedPath);
+
         MvcResult mvcResult = mockMvc.perform(get(processedPath).accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -89,36 +90,19 @@ class PublicResourceTest {
     }
 
     @Test
-    void shouldGetGreetingsReturnOkWithServletPath() throws Exception {
+    void shouldGetGreetingsReturnOk_usingServletPath() throws Exception {
         if (webMvcServlet.getPath().equals("/")) {
             fail("NOT AVAILABLE");
         }
 
         // Try .servletPath("/prefix") (https://docs.spring.io/spring/docs/current/spring-framework-reference/testing.html#spring-mvc-test-server-performing-requests)
-        MvcResult mvcResult = mockMvc.perform(
-//                get(webMvcServlet.getPath("/public/greetings")).servletPath(webMvcServlet.getPath()).accept(MediaType.APPLICATION_JSON))
-                get("/public/greetings").servletPath(webMvcServlet.getPath()).accept(MediaType.APPLICATION_JSON))
+        // in that case, using servletPath() is superfluous
+        mockMvc.perform(
+                get(webMvcServlet.getPath("/public/greetings")).servletPath(webMvcServlet.getPath()).accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$").value("Hello !"))
-                .andReturn();
-
-        // Just to use AssertJ
-        assertThat(mvcResult).isNotNull();
-    }
-
-    @Test
-    void shouldGetGreetingsReturnOkWithPathUnprocessed() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/public/greetings").accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$").value("Hello !"))
-                .andReturn();
-
-        // Just to use AssertJ
-        assertThat(mvcResult).isNotNull();
+                .andExpect(jsonPath("$").value("Hello !"));
     }
 
     @Test
@@ -143,7 +127,7 @@ class PublicResourceTest {
     }
 
     @Test
-    @WithMockUser(username = "spring")
+    @WithMockUser(username = "spring", roles = {"USER", "ADMIN"})
     void shouldGetGreetingsReturnOkBeingAuthenticated() throws Exception {
         mockMvc.perform(get(webMvcServlet.getPath("/public/greetings")).accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -155,7 +139,7 @@ class PublicResourceTest {
 
     @Test
     void shouldGetUnknownUrlReturnNotFound() throws Exception {
-        mockMvc.perform(get("/public/greetingxxxxxxxxxxxxx"))
+        mockMvc.perform(get(webMvcServlet.getPath("/public/greetingxxxxxxxxxxxxx")))
                 .andExpect(status().isNotFound());
     }
 
