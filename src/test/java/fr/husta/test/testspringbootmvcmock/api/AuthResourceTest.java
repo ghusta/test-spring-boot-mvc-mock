@@ -19,8 +19,10 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {AuthResource.class})
@@ -50,7 +52,7 @@ class AuthResourceTest {
     @BeforeEach
     void setUp() {
         String propSpringMvcServletPath = env.getProperty("spring.mvc.servlet.path", "<MISSING>");
-        log.debug("Auto-configuration              : Path = {}", dispatcherServletPath.getPath());
+        AuthResourceTest.log.debug("Auto-configuration              : Path = {}", dispatcherServletPath.getPath());
 
         webMvcServlet = webMvcProperties.getServlet();
 
@@ -65,7 +67,7 @@ class AuthResourceTest {
     @WithMockUser(username = "martin")
     void shouldGetWhoamiReturnOk() throws Exception {
         mockMvc.perform(get(webMvcServlet.getPath("/auth/whoami")).accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                .andDo(log())
                 .andExpect(authenticated().withUsername("martin"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value("martin"))

@@ -24,9 +24,7 @@ import static org.springframework.security.test.web.servlet.response.SecurityMoc
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {PublicResource.class})
@@ -109,7 +107,7 @@ class PublicResourceTest {
 
     @Test
     void shouldGetError500ReturnError() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/public/error-500"))
+        MvcResult mvcResult = mockMvc.perform(get(webMvcServlet.getPath("/public/error-500")))
                 .andExpect(status().is5xxServerError())
                 .andReturn();
 
@@ -119,7 +117,7 @@ class PublicResourceTest {
 
     @Test
     void shouldGetError500ThrowsReturnError() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/public/error-500-throws"))
+        MvcResult mvcResult = mockMvc.perform(get(webMvcServlet.getPath("/public/error-500-throws")))
                 .andExpect(status().is5xxServerError())
                 .andReturn();
 
