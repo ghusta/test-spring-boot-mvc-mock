@@ -64,6 +64,17 @@ class PublicResourceTest {
     }
 
     @Test
+    void shouldGetError500ThrowsReturnError() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/public/error-500-throws"))
+                .andExpect(status().is5xxServerError())
+                .andReturn();
+
+        // Just to use AssertJ
+        assertThat(mvcResult).isNotNull();
+        assertThat(mvcResult.getResolvedException()).isNotNull();
+    }
+
+    @Test
     void shouldGetUnknownUrlReturnNotFound() throws Exception {
         mockMvc.perform(get("/public/greetingxxxxxxxxxxxxx"))
                 .andExpect(status().isNotFound());
