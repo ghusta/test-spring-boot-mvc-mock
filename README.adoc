@@ -24,6 +24,7 @@ It uses https://docs.spring.io/spring/docs/current/spring-framework-reference/te
 * https://spring.io/guides/gs/testing-web/[Testing the Web Layer] (Spring.io)
 * https://docs.spring.io/spring/docs/current/spring-framework-reference/testing.html#spring-mvc-test-framework[Spring MVC Test Framework] (Spring.io)
 * Spring Security :
+** https://docs.spring.io/spring-security/site/docs/current/reference/html/test.html#test-mockmvc[Spring MVC Test Integration] (Spring.io)
 ** https://www.baeldung.com/spring-security-integration-tests[Spring Security for Spring Boot Integration Tests]
 ** https://blog.zenika.com/2016/11/25/spring-mvc-test-dans-un-contexte-securise/[Spring MVC test dans un contexte sécurisé] 🇫🇷
 * Javadoc :
